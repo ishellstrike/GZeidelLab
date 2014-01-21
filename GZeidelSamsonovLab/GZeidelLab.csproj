@@ -46,16 +46,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GzMethod.cs">
+    <Compile Include="GzCalc.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GzMethod.Designer.cs">
-      <DependentUpon>GzMethod.cs</DependentUpon>
+    <Compile Include="GzForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GzForm.Designer.cs">
+      <DependentUpon>GzForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GzMethod.resx">
-      <DependentUpon>GzMethod.cs</DependentUpon>
+    <EmbeddedResource Include="GzForm.resx">
+      <DependentUpon>GzForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -15,7 +15,7 @@ namespace GZeidelSamsonovLab
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GzMethod());
+            Application.Run(new GzForm());
         }
     }
 }

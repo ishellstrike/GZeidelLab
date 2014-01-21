@@ -1,6 +1,6 @@
 ﻿namespace GZeidelSamsonovLab
 {
-    partial class GzMethod
+    partial class GzForm
     {
         /// <summary>
         /// Требуется переменная конструктора.

@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace GZeidelSamsonovLab
 {
-    public partial class GzMethod : Form {
+    public partial class GzForm : Form {
         public const double Epsilon = 0.1;
         public double[,] Input;
         public double[] InputRight;
 
-        public GzMethod()
+        public GzForm()
         {
             InitializeComponent();
         }
@@ -23,37 +23,7 @@ namespace GZeidelSamsonovLab
             wrongSyntaxLabel.Visible = false;
             textBox1_TextChanged(null, null);
         }
-
-        public bool GzEnding(double[] xk, double[] xkp) {
-            return !xk.Where((element, index) => Math.Abs(element - xkp[index]) >= Epsilon).Any();
-        }
-
-        public double[] GzMethodCalc(double[,] a, double[] b) {
-            var n = a.GetLength(0);
-            var x = new double[n];
-            var p = new double[n];
-            do
-            {
-                for (int i = 0; i < n; i++) {
-                    p[i] = x[i];
-                }
-
-                for (int i = 0; i < n; i++) {
-                    double var = 0;
-                    for (int j = 0; j < i; j++) {
-                        var += (a[i, j]*x[j]);
-                    }
-                    for (int j = i + 1; j < n; j++) {
-                        var += (a[i, j]*p[j]);
-                    }
-                    x[i] = (b[i] - var) / a[i, i];
-                }
-            }
-            while (!GzEnding(x, p));
-
-            return x;
-        }
-
+    
         //syntax ((1,2,3),(1,2,3),(1,2,3))(1,2,3)
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
