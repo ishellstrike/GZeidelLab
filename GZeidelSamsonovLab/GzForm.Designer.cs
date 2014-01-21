@@ -33,6 +33,7 @@
             this.wrongSyntaxLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -42,7 +43,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(257, 63);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "((3;4;-4)(4;4;0)(-4;0;5))(3;4;3,1)";
+            this.textBox1.Text = "((2;3;-1)(1;-2;1)(1;0;2))(9;3; 2)";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
@@ -82,17 +83,27 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "label3";
             // 
-            // GzMethod
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(234, 94);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "label4";
+            // 
+            // GzForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(577, 421);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.wrongSyntaxLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "GzMethod";
+            this.Name = "GzForm";
             this.Text = "GzMethod";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -107,6 +118,7 @@
         private System.Windows.Forms.Label wrongSyntaxLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

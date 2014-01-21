@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using GzDll;
 
 namespace GZeidelSamsonovLab
 {
@@ -39,12 +40,14 @@ namespace GZeidelSamsonovLab
 
                 label2.Text = ExtMatrixString(l, r);
 
-                var ountp = GzMethodCalc(l, r);
+                var ountp = GzCalc.GzMethodCalc(l, r);
 
                 label3.Text = VectorString(ountp);
+                label4.Text = GzCalc.iters.ToString();
             }
             catch (Exception ex) {
                 wrongSyntaxLabel.Visible = true;
+                label4.Text = ex.GetType().Name;
             }
         }
 
