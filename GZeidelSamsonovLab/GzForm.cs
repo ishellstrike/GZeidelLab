@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -11,7 +12,6 @@ using GzDll;
 namespace GZeidelSamsonovLab
 {
     public partial class GzForm : Form {
-        public const double Epsilon = 0.1;
         public double[,] Input;
         public double[] InputRight;
 
@@ -23,14 +23,17 @@ namespace GZeidelSamsonovLab
         private void Form1_Load(object sender, EventArgs e) {
             wrongSyntaxLabel.Visible = false;
             textBox1_TextChanged(null, null);
+            ifp = new CultureInfo("en-US");
         }
+
+        private IFormatProvider ifp;
     
         //syntax ((1,2,3),(1,2,3),(1,2,3))(1,2,3)
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             try {
                 string extracted = textBox1.Text;
-                var lastbr = extracted.LastIndexOf('('); 
+                var lastbr = extracted.LastIndexOf('{'); 
                 string right = extracted.Substring(lastbr).Trim(' ');
                 string left = extracted.Substring(0, lastbr).Trim(' ');
 
@@ -56,7 +59,7 @@ namespace GZeidelSamsonovLab
             string s = "";
             for (int i = 0; i < l.GetLength(0); i++)
             {
-                    s += l[i] + "; ";
+                    s += l[i] + ", ";
                 s += Environment.NewLine;
             }
             return s;
@@ -66,7 +69,7 @@ namespace GZeidelSamsonovLab
             string s = "";
             for (int i = 0; i < l.GetLength(0); i++) {
                 for (int j = 0; j < l.GetLength(1); j++) {
-                    s += l[i, j] + "; ";
+                    s += l[i, j] + ", ";
                 }
                 s += " | " + r[i];
                 s += Environment.NewLine;
@@ -77,16 +80,16 @@ namespace GZeidelSamsonovLab
         private double[,] LeftParser(string s) {
             var firstCol = new List<List<double>>();
             bool afterFirst = false;
-            var parts = s.Split('(');
+            var parts = s.Split('{');
 
 
             int y = 0;
             foreach (var part in parts.Where(part => !string.IsNullOrEmpty(part))) {
                 if (!string.IsNullOrEmpty(part)) {
-                    var nums = part.Split(';').Select(t=>t.Trim(' ').Trim(')'));
+                    var nums = part.Split(',').Select(t=>t.Trim(' ').Trim('}'));
                     firstCol.Add(new List<double>());
                     foreach (var num in nums.Where(num => !string.IsNullOrEmpty(num))) {
-                        firstCol[y].Add(Convert.ToDouble(num));
+                        firstCol[y].Add(Convert.ToDouble(num, ifp));
                     }
                     y++;
                 }
@@ -105,10 +108,10 @@ namespace GZeidelSamsonovLab
         private double[] RightParser(string s)
         {
             var firstCol = new List<double>();
-            var nums = s.Split(';').Select(t => t.Trim(' ').Trim(')').Trim('('));
+            var nums = s.Split(',').Select(t => t.Trim(' ').Trim('}').Trim('{'));
             foreach (var num in nums.Where(num => !string.IsNullOrEmpty(num)))
             {
-                firstCol.Add(double.Parse(num));
+                firstCol.Add(Convert.ToDouble(num, ifp));
             }
             var o = new double[firstCol.Count];
 

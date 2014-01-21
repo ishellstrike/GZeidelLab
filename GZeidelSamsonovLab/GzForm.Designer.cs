@@ -43,7 +43,8 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(257, 63);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "((2;3;-1)(1;-2;1)(1;0;2))(9;3; 2)";
+            this.textBox1.Text = "{{20.9,1.2,2.1,0.9}{1.2,21.2,1.5,2.5}{2.1,1.5,19.8,1.3 }{0.9,2.5,1.3,32.1}}{21.7," +
+                "27.46,28.76,49.72";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
