@@ -12,13 +12,38 @@ namespace GzDll {
             return xk.Where((t, i) => Math.Abs(t - xkp[i]) > Eps).Any();
         }
 
+        /*
+         * void conversion(vector<vector<double>> *matr)
+{
+	for (int i = 0; i < (*matr).size(); i++)
+		(*matr)[i][i] = (*matr).at(i).at(i) + 1;
+	return;
+}
+         */
+
+        static void Conversion(ref double[,] matrix, ref double[] extension) {
+            var diver = new double[matrix.GetLength(1)];
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                diver[i] = matrix[i, i];
+            }
+
+            for (int i = 0; i < matrix.GetLength(0); i++) {
+                for (int j = 0; j < matrix.GetLength(1); j++) {
+                    matrix[i, j] /= diver[i];
+                }
+                extension[i] /= diver[i];
+            }
+        }
+
         //((3;4;-4)(4;4;0)(-4;0;5))(3;4;3,1)
         //((1;0;0)(0;1;0)(0;0;1))(1;2;3)
-        public static double[] GzMethodCalc(double[,] a, double[] b) {
-            if (a.GetLength(1) != b.Length) {
+        public static double[] GzMethodCalc(double[,] matrix, double[] extension) {
+            if (matrix.GetLength(1) != extension.Length) {
                 throw new WrongExtendedMatrixException();
             }
-            int n = b.Length;
+            int n = extension.Length;
             double[] calc1 = new double[n];
             double[] calc2 = new double[n];
             iters = 0;
@@ -31,11 +56,11 @@ namespace GzDll {
                 {
                     if (j != k)
                     {
-                        s = s + Math.Abs(a[j, k]);
+                        s = s + Math.Abs(matrix[j, k]);
                     }
-                    if (s >= Math.Abs(a[j, j]))
+                    if (s >= Math.Abs(matrix[j, j]))
                     {
-                        throw new InconsistentException();
+                        Conversion(ref matrix, ref extension);
                     }
                 }
             }
@@ -51,12 +76,12 @@ namespace GzDll {
                     double var = 0;
                     calc1[i] = calc2[i];
                     for (int j = 0; j < i; j++)
-                        var += (a[i, j] * calc2[j]);
+                        var += (matrix[i, j] * calc2[j]);
                     //skipping i==j
                     for (int j = i + 1; j < n; j++)
-                        var += (a[i, j] * calc2[j]);
+                        var += (matrix[i, j] * calc2[j]);
 
-                    calc2[i] = (b[i] - var) / a[i, i];
+                    calc2[i] = (extension[i] - var) / matrix[i, i];
                 }
                 iters++;
                 if (iters > 99999)

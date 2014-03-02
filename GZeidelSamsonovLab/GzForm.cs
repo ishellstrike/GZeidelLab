@@ -31,9 +31,10 @@ namespace GZeidelSamsonovLab
         //syntax ((1,2,3),(1,2,3),(1,2,3))(1,2,3)
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 string extracted = textBox1.Text;
-                var lastbr = extracted.LastIndexOf('{'); 
+                var lastbr = extracted.LastIndexOf('{');
                 string right = extracted.Substring(lastbr).Trim(' ');
                 string left = extracted.Substring(0, lastbr).Trim(' ');
 
@@ -48,7 +49,8 @@ namespace GZeidelSamsonovLab
                 label3.Text = VectorString(ountp);
                 label4.Text = GzCalc.iters.ToString();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 wrongSyntaxLabel.Visible = true;
                 label4.Text = ex.GetType().Name;
             }
