@@ -12,15 +12,6 @@ namespace GzDll {
             return xk.Where((t, i) => Math.Abs(t - xkp[i]) > Eps).Any();
         }
 
-        /*
-         * void conversion(vector<vector<double>> *matr)
-{
-	for (int i = 0; i < (*matr).size(); i++)
-		(*matr)[i][i] = (*matr).at(i).at(i) + 1;
-	return;
-}
-         */
-
         static void Conversion(ref double[,] matrix, ref double[] extension) {
             var diver = new double[matrix.GetLength(1)];
 
@@ -37,8 +28,6 @@ namespace GzDll {
             }
         }
 
-        //((3;4;-4)(4;4;0)(-4;0;5))(3;4;3,1)
-        //((1;0;0)(0;1;0)(0;0;1))(1;2;3)
         public static double[] GzMethodCalc(double[,] matrix, double[] extension) {
             if (matrix.GetLength(1) != extension.Length) {
                 throw new WrongExtendedMatrixException();
