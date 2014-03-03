@@ -9,7 +9,8 @@ namespace GzDll {
 
         public static bool GzCont(double[] xk, double[] xkp)
         {
-            return xk.Where((t, i) => Math.Abs(t - xkp[i]) > Eps).Any();
+            //Ќовое условие, в соответствии с методичкой (from 04.03.2014)
+            return xk.Where((t, i) => Math.Abs(t - xkp[i]) / Math.Abs(xkp[i]) > Eps).Any();
         }
 
         static void Conversion(ref double[,] matrix, ref double[] extension) {

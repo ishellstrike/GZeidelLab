@@ -53,20 +53,6 @@ namespace GzTest
         }
 
         [TestMethod]
-        public void WrongGzMatrixTest() {
-            bool pass = false;
-            double[,] a = { { 0, 0, 1 }, { 0, 1, 0 }, { 1, 0, 0 } };
-            double[] b = { 1, 2, 3 };
-            try {
-                GzCalc.GzMethodCalc(a, b);
-            }
-            catch (InconsistentException) {
-                pass = true;
-            }
-            Assert.IsTrue(pass);
-        }
-
-        [TestMethod]
         public void DifferentExtMatrixTest()
         {
             bool pass = false;
