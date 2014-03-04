@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GzDll {
     public class GzCalc
     {
-        public static double Eps = 0e-15;
+        public static double Eps = 0.00001;
         public static int iters;
 
         public static bool GzCont(double[] xk, double[] xkp)
@@ -13,20 +14,60 @@ namespace GzDll {
             return xk.Where((t, i) => Math.Abs(t - xkp[i]) / Math.Abs(xkp[i]) > Eps).Any();
         }
 
-        static void Conversion(ref double[,] matrix, ref double[] extension) {
+        static void ToDiagonalOne(ref double[,] matrix, ref double[] extension)
+        {
             var diver = new double[matrix.GetLength(1)];
+
+
+            for (int i = 0; i < matrix.GetLength(0); i++) {
+                double[,] doubles = matrix;
+                //найти максимальный элемент i-ой строки
+                diver[i] = Enumerable.Range(0,doubles.GetLength(0)).Select(x=>doubles[i,x]).Max();
+            }
 
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                diver[i] = matrix[i, i];
-            }
-
-            for (int i = 0; i < matrix.GetLength(0); i++) {
-                for (int j = 0; j < matrix.GetLength(1); j++) {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
                     matrix[i, j] /= diver[i];
                 }
                 extension[i] /= diver[i];
             }
+        }
+
+        //Перестановка строк для соблюдения горизонтального преобладания (from 04.03.2014)
+        static void Conversion(ref double[,] matrix, ref double[] extension) {
+            ToDiagonalOne(ref matrix, ref extension);
+            double[,] temp =new double[matrix.GetLength(0),matrix.GetLength(1)];
+            for (int i = 0; i < matrix.GetLength(0); i++) {
+                for (int j = 0; j < matrix.GetLength(1); j++) {
+                    temp[i, j] = matrix[i, j];
+                }
+            }
+            double[] tempe = new double[extension.GetLength(0)];
+            for (int i = 0; i < extension.GetLength(0); i++) {
+                tempe[i] = extension[i];
+            }
+            List<int> uses = new List<int>();
+            for (int m = 0; m < matrix.GetLength(0); m++) { //по столбцам
+                for (int i = 0; i < matrix.GetLength(0); i++) //по строкам
+                {
+                    if (Math.Abs(matrix[m, i] - 1) < Eps) { //единичный элимент -- максимальный
+                        if (!uses.Contains(i)) { //защита от повторного добавления
+                            uses.Add(i);
+                            for (int j = 0; j < matrix.GetLength(0); j++) {
+                                temp[i, j] = matrix[m, j];
+                            }
+                            tempe[i] = extension[m];
+                        }
+                        else {
+                            throw new InconsistentException();
+                        }
+                    }
+                }
+            }
+            matrix = temp;
+            extension = tempe;
         }
 
         public static double[] GzMethodCalc(double[,] matrix, double[] extension) {

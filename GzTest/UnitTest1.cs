@@ -81,5 +81,19 @@ namespace GzTest
                 Assert.IsTrue(d[i] - c[i] < 0.0001);
             }
         }
+
+        [TestMethod]
+        public void RecombineTest()
+        {
+            double[,] a = {{ 1.2, 21.2, 1.5, 2.5 }, { 20.9, 1.2, 2.1, 0.9 }, { 2.1, 1.5, 19.8, 1.3 }, { 0.9, 2.5, 1.3, 32.1 } };
+            double[] b = { 27.46, 21.7, 28.76, 49.72 };
+            double[] c = { 0.8, 1, 1.2, 1.4 };//ansver
+            var d = GzCalc.GzMethodCalc(a, b);
+
+            for (int i = 0; i < c.Length; i++)
+            {
+                Assert.IsTrue(d[i] - c[i] < 0.0001);
+            }
+        }
     }
 }
